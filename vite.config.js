@@ -23,9 +23,17 @@ export default defineConfig({
     }),
     react({
       include: '**/*.{jsx,tsx}',
-      // babel: {
-      //   plugins: ['babel-plugin-styled-components'],
-      // },
+      babel: {
+        plugins: [
+          [
+            'babel-plugin-styled-components',
+            {
+              displayName: true,
+              fileName: true
+            }
+          ]
+        ],
+      },
     }),
   ]
-});
+})

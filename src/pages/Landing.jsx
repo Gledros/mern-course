@@ -1,6 +1,6 @@
 
-import main from '@assets/images/main-alternative.svg'
-import Wrapper from '@assets/wrappers/LandingPage'
+import main from '@images/main-alternative.svg'
+import Wrapper from '@wrappers/LandingPage'
 import { Logo } from '@components'
 import { Link } from 'react-router-dom'
 

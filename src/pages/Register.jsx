@@ -1,4 +1,4 @@
-import Wrapper from '@assets/wrappers/LandingPage'
+import Wrapper from '@wrappers/LandingPage'
 
 const Register = () => {
   return <Wrapper>

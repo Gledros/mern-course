@@ -1,17 +1,18 @@
 import Wrapper from '@wrappers/RegisterPage'
 import { useState, useEffect } from 'react'
 import { Logo, FormRow, Alert } from '@components'
+import { useAppContext } from "@contexts/appContext"
 
 const initialState = {
   name: '',
   email: '',
   password: '',
   isMember: true,
-  showAlert: false,
 }
 
 const Register = () => {
   const [values, setValues] = useState(initialState)
+  const { showAlert, displayAlert, clearAlert } = useAppContext()
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember })
@@ -20,8 +21,8 @@ const Register = () => {
   const handleChange = e => {
     const newValues = { ...values, [e.target.name]: e.target.value }
 
-    if (values.showAlert)
-      newValues.showAlert = false
+    if (showAlert)
+      clearAlert()
 
     setValues(newValues)
   }
@@ -29,15 +30,14 @@ const Register = () => {
   const onSubmit = e => {
     e.preventDefault()
 
-    for (const key in values) {
-      if (typeof (values[key]) === 'string') {
-        if (values[key].length === 0) {
-          setValues({ ...values, showAlert: true })
-          break
-        }
-      }
+    const { name, email, password, isMember } = values
+
+    if ((!isMember && !name) || !email || !password) {
+      displayAlert()
+      return
     }
 
+    clearAlert()
     console.log('yei!')
   }
 
@@ -45,7 +45,7 @@ const Register = () => {
     <form className='form' onSubmit={onSubmit}>
       <Logo />
       <h3>{values.isMember ? 'Login' : 'Register'}</h3>
-      {values.showAlert && <Alert text='Missing values' />}
+      {showAlert && <Alert />}
       {!values.isMember &&
         <FormRow type='text' name='name' value={values.name} handleChange={handleChange} />}
       <FormRow type='email' name='email' value={values.email} handleChange={handleChange} />

@@ -1,0 +1,25 @@
+{
+  "name": "mern-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gledros/mern-course.git"
+  },
+  "author": "Glenn Della Rocca Suasnavar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gledros/mern-course/issues"
+  },
+  "homepage": "https://github.com/Gledros/mern-course#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
+}

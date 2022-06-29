@@ -8,7 +8,8 @@ dotenv.config()
 import connectDB from './db/connect.js'
 
 // Routers
-import router from './routes/authRoutes.js'
+import authRouter from './routes/authRoutes.js'
+import jobRouter from './routes/jobsRoutes.js'
 
 // Middleware
 import notFoundMiddleware from './middleware/not-found.js'
@@ -20,7 +21,8 @@ app.get('/', (request, response) => {
   response.send('Hello World')
 })
 
-app.use('/api/v1/auth', router)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/jobs', jobRouter)
 
 app.use(errorHandlerMiddleware)
 app.use(notFoundMiddleware)

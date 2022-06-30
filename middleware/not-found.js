@@ -1,6 +1,5 @@
-
 const notFoundMiddleware = (request, response) => {
-  response.status(404).send(`Not Found : ${request.originalUrl}`)
-}
+  response.status(404).send(`Not Found : ${request.originalUrl}`);
+};
 
-export default notFoundMiddleware
+export default notFoundMiddleware;

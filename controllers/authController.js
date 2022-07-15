@@ -1,5 +1,8 @@
-const register = (request, response) => {
-  response.send("register user");
+import User from "../models/User.js";
+
+const register = async (request, response) => {
+  const user = await User.create(request.body);
+  response.status(201).json({ user });
 };
 
 const login = (request, response) => {

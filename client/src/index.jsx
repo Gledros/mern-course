@@ -7,9 +7,9 @@ import { AppProvider } from '@contexts/appContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode> //REACT v18 useEffect BUG when using StrictMode on development
     <AppProvider>
       <App />
     </AppProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 )

@@ -4,6 +4,9 @@ const app = express();
 import dotenv from "dotenv";
 dotenv.config();
 
+import cors from "cors";
+app.use(cors());
+
 import "express-async-errors";
 
 // DB & authentication
@@ -19,8 +22,14 @@ import errorHandlerMiddleware from "./middleware/error-handler.js";
 
 app.use(express.json());
 
+import { StatusCodes as HTTP } from "http-status-codes";
+
 app.get("/", (request, response) => {
   response.send("Hello World");
+});
+
+app.get("/api/v1/", (request, response) => {
+  response.status(HTTP.OK).json({ msg: "API v1" });
 });
 
 app.use("/api/v1/auth", authRouter);

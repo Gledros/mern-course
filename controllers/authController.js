@@ -1,41 +1,55 @@
-import User from "../models/User.js";
-import { StatusCodes as HTTP } from "http-status-codes";
-
-class CustomAPIError extends Error {
-  constructor(message) {
-    super(message);
-    this.code = HTTP.BAD_REQUEST;
-    this.errors = [];
-  }
-}
+import User from '../models/User.js'
+import { StatusCodes as HTTP } from 'http-status-codes'
+import { BadRequestError, UnAuthenticatedError } from '../errors/index.js'
 
 const register = async (request, response) => {
-  const { name, email, password } = request.body;
+  const { name, email, password } = request.body
 
   if (!name || !email || !password) {
-    throw new CustomAPIError("Please provide all the values");
+    throw new BadRequestError('Please provide all the values')
   }
 
-  let user = await User.create(request.body);
-  const token = user.createJWT();
+  let user = await User.create(request.body)
+  const token = user.createJWT()
+
+  response.status(HTTP.CREATED).json({
+    user,
+    token,
+    location: user.location
+  })
+}
+
+const login = async (request, response) => {
+  const { email, password } = request.body
+
+  if (!email || !password) {
+    throw new BadRequestError('Please provide all the values')
+  }
+
+  const user = await User.findOne({ email }).select('+password')
+
+  if (!user) {
+    throw new UnAuthenticatedError('Invalid email')
+  }
+
+  const passwordMatch = await user.comparePassword(password)
+
+  if (!passwordMatch) {
+    throw new UnAuthenticatedError('Invalid password')
+  }
+
+  const token = user.createJWT()
+  user.password = undefined
 
   response.status(HTTP.OK).json({
-    user: {
-      name: user.name,
-      lastName: user.lastName,
-      email: user.email,
-      location: user.location
-    },
-    token
-  });
-};
-
-const login = (request, response) => {
-  response.send("login user");
-};
+    user,
+    token,
+    location: user.location
+  })
+}
 
 const updateUser = (request, response) => {
-  response.send("update user");
-};
+  response.send('update user')
+}
 
-export { register, login, updateUser };
+export { register, login, updateUser }

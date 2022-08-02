@@ -5,7 +5,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/v1')
+        const response = await fetch('/api/v1')
         const data = await response.json()
         console.log(data)
 

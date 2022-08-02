@@ -6,20 +6,32 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 
 dotenv.config()
 
-
 export default defineConfig({
   root: 'src',
   build: {
-    outDir: '../dist',
+    outDir: '../dist'
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        secure: false,
+        ws: true
+      }
+    }
   },
   plugins: [
     ViteAliases(),
     createHtmlPlugin({
       inject: {
         data: {
-          title: process.env.NODE_ENV === 'production' ? 'My site' : `My site [${process.env.NODE_ENV}]`,
-        },
-      },
+          title:
+            process.env.NODE_ENV === 'production'
+              ? 'My site'
+              : `My site [${process.env.NODE_ENV}]`
+        }
+      }
     }),
     react({
       include: '**/*.{jsx,tsx}',
@@ -32,8 +44,8 @@ export default defineConfig({
               fileName: true
             }
           ]
-        ],
-      },
-    }),
+        ]
+      }
+    })
   ]
 })

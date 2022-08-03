@@ -14,7 +14,7 @@ const initialState = {
 const Register = () => {
   const navigate = useNavigate()
   const [values, setValues] = useState(initialState)
-  const { showAlert, displayAlert, clearAlert, registerUser, user } =
+  const { showAlert, displayAlert, clearAlert, registerUser, user, loginUser } =
     useAppContext()
 
   useEffect(() => {
@@ -49,14 +49,13 @@ const Register = () => {
 
     const currentUser = { name, email, password }
 
-    if (isMember) console.log('Already a member')
+    if (isMember) loginUser(currentUser)
     else {
       registerUser(currentUser)
       displayAlert()
     }
 
     clearAlert()
-    console.log('yei!')
   }
 
   return (

@@ -45,6 +45,37 @@ const actions = {
       alertType: 'danger',
       alertText: action.payload.message
     })
+  },
+  LOGIN_USER_BEGIN: {
+    id: 'LOGIN_USER_BEGIN',
+    apply: (state, action) => ({
+      ...state,
+      isLoading: true
+    })
+  },
+  LOGIN_USER_SUCCESS: {
+    id: 'LOGIN_USER_SUCCESS',
+    apply: (state, action) => ({
+      ...state,
+      isLoading: false,
+      token: action.payload.token,
+      user: action.payload.user,
+      location: action.payload.user.location,
+      jobLocation: action.payload.user.location,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'User logged in! Redirecting...'
+    })
+  },
+  LOGIN_USER_ERROR: {
+    id: 'LOGIN_USER_ERROR',
+    apply: (state, action) => ({
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.message
+    })
   }
 }
 

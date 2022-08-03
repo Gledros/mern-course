@@ -24,14 +24,13 @@ const AppProvider = ({ children }) => {
 
   const displayAlert = () => {
     dispatch({ type: actions.DISPLAY_ALERT.id })
-
-    setTimeout(() => {
-      clearAlert()
-    }, 3000)
+    clearAlert()
   }
 
-  const clearAlert = () => {
-    dispatch({ type: actions.HIDE_ALERT.id })
+  const clearAlert = (timeout = 3000) => {
+    setTimeout(() => {
+      dispatch({ type: actions.HIDE_ALERT.id })
+    }, timeout)
   }
 
   const registerUser = async newUser => {
@@ -63,6 +62,45 @@ const AppProvider = ({ children }) => {
         payload: { message: error.response.data.message }
       })
     }
+
+    clearAlert()
+  }
+
+  const loginUser = async currentUser => {
+    dispatch({ type: actions.LOGIN_USER_BEGIN.id })
+
+    fetch('/api/v1/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(currentUser)
+    })
+      .then(response => {
+        if (response.ok) return response.json()
+
+        return response.json().then(data => {
+          throw new Error(data.message)
+        })
+      })
+      .then(data => {
+        const { user, token } = data
+
+        dispatch({
+          type: actions.LOGIN_USER_SUCCESS.id,
+          payload: { user, token }
+        })
+        addToLocalStorage(user, 'user')
+        addToLocalStorage(token, 'token')
+        addToLocalStorage(user.location, 'location')
+      })
+      .catch(error => {
+        dispatch({
+          type: actions.LOGIN_USER_ERROR.id,
+          payload: { message: error.message }
+        })
+      })
+
     clearAlert()
   }
 
@@ -80,8 +118,7 @@ const AppProvider = ({ children }) => {
     displayAlert,
     clearAlert,
     registerUser,
-    addToLocalStorage,
-    removeFromLocalStorage
+    loginUser
   }
 
   return (

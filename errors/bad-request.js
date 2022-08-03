@@ -3,7 +3,7 @@ import { StatusCodes as HTTP } from 'http-status-codes'
 class BadRequestError extends Error {
   constructor(message) {
     super(message)
-    this.statusCode = HTTP.BAD_REQUEST
+    this.code = HTTP.BAD_REQUEST
   }
 }
 

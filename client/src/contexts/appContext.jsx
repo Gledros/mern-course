@@ -33,43 +33,10 @@ const AppProvider = ({ children }) => {
     }, timeout)
   }
 
-  const registerUser = async newUser => {
-    dispatch({ type: actions.REGISTER_USER_BEGIN.id })
+  const setupUser = async ({ currentUser, endpoint, alertText }) => {
+    dispatch({ type: actions.SETUP_USER_BEGIN.id })
 
-    try {
-      const response = await fetch('/api/v1/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newUser)
-      })
-
-      const data = await response.json()
-      const { user, token } = data
-
-      dispatch({
-        type: actions.REGISTER_USER_SUCCESS.id,
-        payload: { user, token }
-      })
-      addToLocalStorage(user, 'user')
-      addToLocalStorage(token, 'token')
-      addToLocalStorage(user.location, 'location')
-    } catch (error) {
-      console.log(error.response)
-      dispatch({
-        type: actions.REGISTER_USER_ERROR.id,
-        payload: { message: error.response.data.message }
-      })
-    }
-
-    clearAlert()
-  }
-
-  const loginUser = async currentUser => {
-    dispatch({ type: actions.LOGIN_USER_BEGIN.id })
-
-    fetch('/api/v1/auth/login', {
+    fetch(`/api/v1/auth/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -87,8 +54,13 @@ const AppProvider = ({ children }) => {
         const { user, token } = data
 
         dispatch({
-          type: actions.LOGIN_USER_SUCCESS.id,
-          payload: { user, token }
+          type: actions.SETUP_USER_SUCCESS.id,
+          payload: {
+            user,
+            token,
+            location: user.location,
+            alertText: alertText
+          }
         })
         addToLocalStorage(user, 'user')
         addToLocalStorage(token, 'token')
@@ -96,12 +68,10 @@ const AppProvider = ({ children }) => {
       })
       .catch(error => {
         dispatch({
-          type: actions.LOGIN_USER_ERROR.id,
+          type: actions.SETUP_USER_ERROR.id,
           payload: { message: error.message }
         })
       })
-
-    clearAlert()
   }
 
   const addToLocalStorage = (data, itemName) => {
@@ -117,8 +87,7 @@ const AppProvider = ({ children }) => {
   const functions = {
     displayAlert,
     clearAlert,
-    registerUser,
-    loginUser
+    setupUser
   }
 
   return (

@@ -14,7 +14,7 @@ const initialState = {
 const Register = () => {
   const navigate = useNavigate()
   const [values, setValues] = useState(initialState)
-  const { showAlert, displayAlert, clearAlert, registerUser, user, loginUser } =
+  const { showAlert, displayAlert, clearAlert, user, setupUser } =
     useAppContext()
 
   useEffect(() => {
@@ -49,12 +49,21 @@ const Register = () => {
 
     const currentUser = { name, email, password }
 
-    if (isMember) loginUser(currentUser)
+    if (isMember)
+      setupUser({
+        currentUser,
+        endpoint: 'login',
+        alertText: 'User logged in! Redirecting...'
+      })
     else {
-      registerUser(currentUser)
-      displayAlert()
+      setupUser({
+        currentUser,
+        endpoint: 'register',
+        alertText: 'User registered! Redirecting...'
+      })
     }
 
+    displayAlert()
     clearAlert()
   }
 

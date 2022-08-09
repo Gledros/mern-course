@@ -5,11 +5,11 @@ import { Stats, Jobs, AddJob, Profile, DashboardLayout } from '@pages/dashboard'
 const App = () => {
   return (
     <BrowserRouter>
-      <nav>
+      {/* <nav>
         <Link to='/'>Dashboard</Link>
         <Link to='/register'>Register</Link>
         <Link to='/landing'>Landing</Link>
-      </nav>
+      </nav> */}
       <Routes>
         <Route
           path='/'

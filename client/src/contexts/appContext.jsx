@@ -14,7 +14,8 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: location,
-  jobLocation: location
+  jobLocation: location,
+  showSidebar: false
 }
 
 const AppContext = React.createContext()
@@ -84,10 +85,15 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem(itemName)
   }
 
+  const toggleSidebar = () => {
+    dispatch({ type: actions.TOGGLE_SIDEBAR.id })
+  }
+
   const functions = {
     displayAlert,
     clearAlert,
-    setupUser
+    setupUser,
+    toggleSidebar
   }
 
   return (

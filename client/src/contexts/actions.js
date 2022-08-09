@@ -45,6 +45,13 @@ const actions = {
       alertType: 'danger',
       alertText: action.payload.message
     })
+  },
+  TOGGLE_SIDEBAR: {
+    id: 'TOGGLE_SIDEBAR',
+    apply: (state, action) => ({
+      ...state,
+      showSidebar: !state.showSidebar
+    })
   }
 }
 

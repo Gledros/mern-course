@@ -4,7 +4,7 @@ import Logo from './Logo.jsx'
 import { useAppContext } from '@contexts/appContext'
 
 export default function Navbar() {
-  const { user, showSidebar, toggleSidebar } = useAppContext()
+  const { user, showSidebar, toggleSidebar, logoutUser } = useAppContext()
 
   return (
     <Wrapper>
@@ -27,7 +27,7 @@ export default function Navbar() {
             <FaCaretDown />
           </button>
           <div className={`dropdown ${showSidebar && 'show-dropdown'}`}>
-            <button type='button' className='dropdown-btn'>
+            <button type='button' className='dropdown-btn' onClick={logoutUser}>
               logout
             </button>
           </div>

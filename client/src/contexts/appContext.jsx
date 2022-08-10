@@ -89,11 +89,17 @@ const AppProvider = ({ children }) => {
     dispatch({ type: actions.TOGGLE_SIDEBAR.id })
   }
 
+  const logoutUser = () => {
+    dispatch({ type: actions.LOGOUT_USER.id })
+    localStorage.clear()
+  }
+
   const functions = {
     displayAlert,
     clearAlert,
     setupUser,
-    toggleSidebar
+    toggleSidebar,
+    logoutUser
   }
 
   return (

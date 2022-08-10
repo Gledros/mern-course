@@ -52,6 +52,17 @@ const actions = {
       ...state,
       showSidebar: !state.showSidebar
     })
+  },
+  LOGOUT_USER: {
+    id: 'LOGOUT_USER',
+    apply: (state, action) => ({
+      ...state,
+      token: null,
+      user: null,
+      userLocation: null,
+      jobLocation: null,
+      showSidebar: false
+    })
   }
 }
 
